@@ -6,14 +6,14 @@
   IPAddress subnet(255,255,255,0);
   IPAddress primaryDNS(8,8,8,8);
   IPAddress secondaryDNS(8,8,4,4);
-  String apiKey = "GET /update?key=T5BYWX3LLACXUNFY";    // canal ThinkSpeak PROTOTIPO
+  String apiKey = "GET /update?key=xxxxxxx";    // canal ThinkSpeak PROTOTIPO
 #else
   IPAddress local_IP(192,168,15,222);
   IPAddress gateway(192,168,15,1);
   IPAddress subnet(255,255,255,0);
   IPAddress primaryDNS(192,168,15,1);
   IPAddress secondaryDNS(192,168,15,1);
-  String apiKey = "GET /update?key=VS4A5L3IHYY4DDZW";    // canal ThinkSpeak
+  String apiKey = "GET /update?key=yyyyyyy";    // canal ThinkSpeak
 #endif
 
 #define sVent 12
@@ -82,8 +82,8 @@ uint8_t  hora, minuto, segundo, dia, mes, semana;
 uint16_t ano;
 
 //################ VARIABLES ################
-const char* ssid      = "Haroldinho";     // WiFi SSID
-const char* password  = "pilcopilco";     // WiFi Password
+const char* ssid      = "NOME";     // WiFi SSID
+const char* password  = "SENHA";     // WiFi Password
 
 WebServer server(80);
 
