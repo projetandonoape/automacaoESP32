@@ -82,12 +82,12 @@ uint8_t  hora, minuto, segundo, dia, mes, semana;
 uint16_t ano;
 
 //################ VARIABLES ################
-const char* ssid      = "NOME";     // WiFi SSID
-const char* password  = "SENHA";     // WiFi Password
+const char* ssid       = "NOME DA REDE WiFi";     //altere com os dados de sua rede
+const char* password   = "SENHA DA REDE WiFi";    //altere com os dados de sua rede
 
 WebServer server(80);
 
-String sitetitle      = "GROWINO";               // Appears on the tabe of a Web Browser
+String sitetitle      = "TITULO DO SITE";               // Appears on the tabe of a Web Browser
 String yourfootnote   = "ESP32 Webserver Demonstration"; // A foot note e.g. "My Web Site"
 
 #define sitewidth 880 //1024  // Adjust site page width in pixels as required
