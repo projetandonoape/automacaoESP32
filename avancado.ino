@@ -257,9 +257,9 @@ void setup(){
   uint8_t pinosIN  [] = {34, 35, 36, 39};
   for (uint8_t i = 0; i < 12; i++) {
     pinMode (pinosOUT [i], OUTPUT);
-    if (i < 4) pinMode(pinosIN [i], INPUT);
+    if (i < 4) pinMode (pinosIN [i], INPUT);
     if (i < 8) SSR[i].pino = pinosOUT [i];
-    if (i > 8) digitalWrite(pinosOUT [i], HIGH);  
+    else       digitalWrite (pinosOUT [i], HIGH); 
   }
 
   iniciaMemoria();
