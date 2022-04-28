@@ -63,8 +63,8 @@ void setup() {
   uint8_t pinosOUT [] = {ledAz, ledVd, ledAm, ledVm, S0, S1, S2, S3, S4, S5, S6, S7, buzz};
   uint8_t pinosIN  [] = {34, 35, 36, 39};
   for (uint8_t i = 0; i < 13; i++) {
-    pinMode(pinosOUT[i], OUTPUT);
     if (i < 4) pinMode(pinosIN[i], INPUT);
+    else pinMode(pinosOUT[i], OUTPUT);
   }
   u8g2.begin();               //inicializa display
   u8g2.enableUTF8Print();     //permite uso de caracteres especiais no display
