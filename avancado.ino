@@ -451,9 +451,10 @@ void acionaTempo(){
 
     if (SSR[i].intermitente) if (SSR[i].vezesH == 0 || SSR[i].vezesH > 60) SSR[i].vezesH  = 1;
 
-    if (SSR[i].horaLiga <= SSR[i].horaDesliga) {                //9 - hora - 10
-      if (hora >= SSR[i].horaLiga && hora <= SSR[i].horaDesliga) {
-        if (hora == SSR[i].horaDesliga && minuto >= SSR[i].minutoDesliga) SSR[i].estado = false;
+    if (SSR[i].horaLiga <= SSR[i].horaDesliga) {                //9 - hora - 10     (11)
+      if (hora >= SSR[i].horaLiga && hora <= SSR[i].horaDesliga) {      
+        if      (hora == SSR[i].horaDesliga && minuto >= SSR[i].minutoDesliga) SSR[i].estado = false; 
+        else if (hora == SSR[i].horaLiga    && minuto <  SSR[i].minutoLiga)    SSR[i].estado = false;
         else if (SSR[i].intermitente) {
           PeriodoIntermitencia = 60 / SSR[i].vezesH;    //20min liga 5min
           if (minuto % PeriodoIntermitencia < SSR[i].Mcada) SSR[i].estado = true;
@@ -464,7 +465,9 @@ void acionaTempo(){
       else SSR[i].estado = false;
     }
     else if (hora >= SSR[i].horaLiga || hora < SSR[i].horaDesliga) {   //19 - hora - 9
-      if (SSR[i].intermitente) {
+      if      (hora == SSR[i].horaDesliga && minuto >= SSR[i].minutoDesliga) SSR[i].estado = false; 
+      else if (hora == SSR[i].horaLiga    && minuto <  SSR[i].minutoLiga)    SSR[i].estado = false;
+      else if (SSR[i].intermitente) {
         PeriodoIntermitencia = 60 / SSR[i].vezesH;    //20min liga 5min
         if (minuto % PeriodoIntermitencia < SSR[i].Mcada) SSR[i].estado = true;
         else SSR[i].estado = false;
