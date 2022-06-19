@@ -451,7 +451,7 @@ void acionaTempo(){
 
     if (SSR[i].intermitente) if (SSR[i].vezesH == 0 || SSR[i].vezesH > 60) SSR[i].vezesH  = 1;
 
-    if (SSR[i].horaLiga <= SSR[i].horaDesliga) {                //9 - hora - 10     (11)
+    if (SSR[i].horaLiga < SSR[i].horaDesliga) {                //9 - hora - 10     (11)
       if (hora >= SSR[i].horaLiga && hora <= SSR[i].horaDesliga) {      
         if      (hora == SSR[i].horaDesliga && minuto >= SSR[i].minutoDesliga) SSR[i].estado = false; 
         else if (hora == SSR[i].horaLiga    && minuto <  SSR[i].minutoLiga)    SSR[i].estado = false;
