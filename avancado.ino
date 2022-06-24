@@ -464,7 +464,7 @@ void acionaTempo(){
       }
       else SSR[i].estado = false;
     }
-    else if (hora >= SSR[i].horaLiga || hora < SSR[i].horaDesliga) {   //19 - hora - 9
+    else if (hora >= SSR[i].horaLiga || hora <= SSR[i].horaDesliga) {   //19 - hora - 9
       if      (hora == SSR[i].horaDesliga && minuto >= SSR[i].minutoDesliga) SSR[i].estado = false; 
       else if (hora == SSR[i].horaLiga    && minuto <  SSR[i].minutoLiga)    SSR[i].estado = false;
       else if (SSR[i].intermitente) {
