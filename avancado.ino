@@ -442,39 +442,45 @@ void loop_Principal (void *pvParameter) {
 }
 void acionaTempo(){
   uint8_t PeriodoIntermitencia;
-  if (hora == 23 && minuto == 45 && segundo == 0) relogioNTP();
+  if (minuto == 45 && segundo == 0) relogioNTP();
   for (uint8_t i = 0; i < 8; i++) {
-    if (SSR[i].horaLiga + SSR[i].minutoLiga + SSR[i].horaDesliga + SSR[i].minutoDesliga == 0) {
-      SSR[i].estado = false;
-      continue;
+    SSR[i].estado = false;
+    if (SSR[i].horaLiga + SSR[i].minutoLiga + SSR[i].horaDesliga + SSR[i].minutoDesliga == 0) continue;
+
+    if (SSR[i].intermitente) {
+      if (SSR[i].vezesH == 0 || (SSR[i].vezesH * SSR[i].Mcada > 54)) SSR[i].vezesH  = 1;
+      else PeriodoIntermitencia = 60 / SSR[i].vezesH; 
     }
 
-    if (SSR[i].intermitente) if (SSR[i].vezesH == 0 || SSR[i].vezesH > 60) SSR[i].vezesH  = 1;
-
-    if (SSR[i].horaLiga < SSR[i].horaDesliga) {                //9 - hora - 10     (11)
-      if (hora >= SSR[i].horaLiga && hora <= SSR[i].horaDesliga) {      
-        if      (hora == SSR[i].horaDesliga && minuto >= SSR[i].minutoDesliga) SSR[i].estado = false; 
-        else if (hora == SSR[i].horaLiga    && minuto <  SSR[i].minutoLiga)    SSR[i].estado = false;
-        else if (SSR[i].intermitente) {
-          PeriodoIntermitencia = 60 / SSR[i].vezesH;    //20min liga 5min
-          if (minuto % PeriodoIntermitencia < SSR[i].Mcada) SSR[i].estado = true;
-          else SSR[i].estado = false;
+    if (hora >= SSR[i].horaLiga || hora <= SSR[i].horaDesliga) {       //9 - hora - 10
+      if (SSR[i].horaLiga < SSR[i].horaDesliga && hora > SSR[i].horaDesliga) continue;
+      if (SSR[i].horaLiga == SSR[i].horaDesliga ) {
+        if  (SSR[i].minutoLiga > SSR[i].minutoDesliga && minuto >= SSR[i].minutoLiga) {
+          if (SSR[i].intermitente) {if (minuto % PeriodoIntermitencia < SSR[i].Mcada) SSR[i].estado = true;}
+          else  SSR[i].estado = true;
         }
-        else SSR[i].estado = true;
+        else if (minuto >= SSR[i].minutoLiga && minuto < SSR[i].minutoDesliga) {
+          if (SSR[i].intermitente) {if (minuto % PeriodoIntermitencia < SSR[i].Mcada) SSR[i].estado = true;}
+          else  SSR[i].estado = true;
+        }
       }
-      else SSR[i].estado = false;
+      else if (hora == SSR[i].horaDesliga) {
+        if (minuto < SSR[i].minutoDesliga) {
+          if (SSR[i].intermitente) {if (minuto % PeriodoIntermitencia < SSR[i].Mcada) SSR[i].estado = true;}
+          else  SSR[i].estado = true;
+        }
+      }
+      else if (hora == SSR[i].horaLiga) {
+        if (minuto >= SSR[i].minutoLiga) {
+          if (SSR[i].intermitente) {if (minuto % PeriodoIntermitencia < SSR[i].Mcada) SSR[i].estado = true;}
+          else  SSR[i].estado = true;
+        }
+      }
+      else {
+        if (SSR[i].intermitente) {if (minuto % PeriodoIntermitencia < SSR[i].Mcada) SSR[i].estado = true;}
+        else  SSR[i].estado = true;
+      }
     }
-    else if (hora >= SSR[i].horaLiga || hora <= SSR[i].horaDesliga) {   //19 - hora - 9
-      if      (hora == SSR[i].horaDesliga && minuto >= SSR[i].minutoDesliga) SSR[i].estado = false; 
-      else if (hora == SSR[i].horaLiga    && minuto <  SSR[i].minutoLiga)    SSR[i].estado = false;
-      else if (SSR[i].intermitente) {
-        PeriodoIntermitencia = 60 / SSR[i].vezesH;    //20min liga 5min
-        if (minuto % PeriodoIntermitencia < SSR[i].Mcada) SSR[i].estado = true;
-        else SSR[i].estado = false;
-      } 
-      else SSR[i].estado = true;
-    }
-    else SSR[i].estado = false;
   }
 }
 void verificaLimites () {
