@@ -461,14 +461,12 @@ void acionaTempo(){
     else if (hora == SSR[i].horaDesliga) {
       if (minuto < SSR[i].minutoDesliga) SSR[i].estado = Estado;
     }
-    else if (hora > SSR[i].horaLiga && SSR[i].horaLiga == SSR[i].horaDesliga) {
-      if (SSR[i].minutoLiga > SSR[i].minutoDesliga) SSR[i].estado = Estado;
-    }
-    else if (SSR[i].horaLiga > SSR[i].horaDesliga) {
-      if (hora > SSR[i].horaLiga || hora < SSR[i].horaDesliga) SSR[i].estado = Estado;
-    }
-    else if (SSR[i].horaLiga < SSR[i].horaDesliga) {
-      if (hora > SSR[i].horaLiga && hora < SSR[i].horaDesliga) SSR[i].estado = Estado;
+    else if (hora > SSR[i].horaLiga && hora < SSR[i].horaDesliga) SSR[i].estado = Estado;
+    else if (hora > SSR[i].horaLiga || hora < SSR[i].horaDesliga) {
+      if      (SSR[i].horaLiga > SSR[i].horaDesliga) SSR[i].estado = Estado;
+      else if (SSR[i].horaLiga == SSR[i].horaDesliga) {
+        if (SSR[i].minutoLiga > SSR[i].minutoDesliga) SSR[i].estado = Estado;
+      }
     }
   }
 }
